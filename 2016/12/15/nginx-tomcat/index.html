@@ -1,0 +1,878 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tomact," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="搭建Nginx+Java环境Apache对Java的支持很灵活，它们的结合度也很高，例如Apache+Tomcat和Apache+resin等都可以实现对Java应用的支持。Apache一般采用一个内置模块来和Java应用服务器打交道。与Apache相比，Nginx在配合Java应用服务器方面，耦合度很低，它只能通过自身的反向代理功能来实现与Java应用服务器的支持。但这恰恰是Nginx的一个优点">
+<meta name="keywords" content="tomact">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx_tomcat(转)">
+<meta property="og:url" content="http://yoursite.com/2016/12/15/nginx-tomcat/index.html">
+<meta property="og:site_name" content="3.mu-blog">
+<meta property="og:description" content="搭建Nginx+Java环境Apache对Java的支持很灵活，它们的结合度也很高，例如Apache+Tomcat和Apache+resin等都可以实现对Java应用的支持。Apache一般采用一个内置模块来和Java应用服务器打交道。与Apache相比，Nginx在配合Java应用服务器方面，耦合度很低，它只能通过自身的反向代理功能来实现与Java应用服务器的支持。但这恰恰是Nginx的一个优点">
+<meta property="og:updated_time" content="2019-12-23T03:00:20.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nginx_tomcat(转)">
+<meta name="twitter:description" content="搭建Nginx+Java环境Apache对Java的支持很灵活，它们的结合度也很高，例如Apache+Tomcat和Apache+resin等都可以实现对Java应用的支持。Apache一般采用一个内置模块来和Java应用服务器打交道。与Apache相比，Nginx在配合Java应用服务器方面，耦合度很低，它只能通过自身的反向代理功能来实现与Java应用服务器的支持。但这恰恰是Nginx的一个优点">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '主编大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/15/nginx-tomcat/"/>
+
+
+
+
+
+  <title> nginx_tomcat(转) | 3.mu-blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59905235";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">3.mu_blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">one step</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/15/nginx-tomcat/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="3.mu_blog">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/me.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="3.mu-blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="3.mu-blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                nginx_tomcat(转)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-15T12:45:39+00:00">
+                2016-12-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2019-12-23T03:00:20+00:00">
+                2019-12-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2016/12/15/nginx-tomcat/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2016/12/15/nginx-tomcat/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="搭建Nginx-Java环境"><a href="#搭建Nginx-Java环境" class="headerlink" title="搭建Nginx+Java环境"></a>搭建Nginx+Java环境</h1><p>Apache对Java的支持很灵活，它们的结合度也很高，例如Apache+Tomcat和Apache+resin等都可以实现对Java应用的支持。Apache一般采用一个内置模块来和Java应用服务器打交道。与Apache相比，Nginx在配合Java应用服务器方面，耦合度很低，它只能通过自身的反向代理功能来实现与Java应用服务器的支持。但这恰恰是Nginx的一个优点，耦合度的降低，可以使Nginx与Java服务器的相互影响降到最低。</p>
+<p>接下来通过Nginx+Tomcat的实例来讲解Nginx对Java的支持。Tomcat在高并发环境下处理动态请求时性能很低，而在处理静态页面更加脆弱。虽然Tomcat的最新版本支持epoll，但是通过Nginx来处理静态页面要比通过Tomcat处理在性能方面好很多。</p>
+<p>Nginx可以通过以下两种方式来实现与Tomcat的耦合：</p>
+<p>将静态页面请求交给Nginx，动态请求交给后端Tomcat处理。</p>
+<p>将所有请求都交给后端的Tomcat服务器处理，同时利用Nginx自身的负载均衡功能进行多台Tomcat服务器的负载均衡。</p>
+<p>下面通过两个配置实例分别讲述这两种实现Nginx与Tomcat耦合的方式</p>
+<h2 id="动态页面与静态页面分离的实例"><a href="#动态页面与静态页面分离的实例" class="headerlink" title="动态页面与静态页面分离的实例"></a>动态页面与静态页面分离的实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">server &#123;  </div><div class="line">      listen 80;  </div><div class="line">      server_name www.ixdba.net;  </div><div class="line">      root /web/www/html;  </div><div class="line"> </div><div class="line">location /img/ &#123;  </div><div class="line">      alias /web/www/html/img/;  </div><div class="line">&#125;  </div><div class="line"> </div><div class="line">location ~ (\.jsp)|(\.do)$ &#123;  </div><div class="line">     proxy_pass http://192.168.12.130:8080;  </div><div class="line">     proxy_redirect off;  </div><div class="line">     proxy_set_header Host $host;  </div><div class="line">     proxy_set_header X-Real-IP $remote_addr;  </div><div class="line">     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  </div><div class="line">     client_max_body_size 10m;  </div><div class="line">     client_body_buffer_size 128k;  </div><div class="line">     proxy_connect_timeout 90;  </div><div class="line">     proxy_send_timeout 90;  </div><div class="line">     proxy_read_timeout 90;  </div><div class="line">     proxy_buffer_size 4k;  </div><div class="line">     proxy_buffers 4 32k;  </div><div class="line">     proxy_busy_buffers_size 64k;  </div><div class="line">     proxy_temp_file_write_size 64k;  </div><div class="line"> &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个实例中，首先定义了一个虚拟主机www.ixdba.net，然后通过location指令将/web/www/html/img/目录下的静态文件交给Nginx来完成。最后一个location指令将所有以.jsp、.do结尾的文件都交给Tomcat服务器的8080端口来处理，即<a href="http://192.168.12.130:8080。" target="_blank" rel="external">http://192.168.12.130:8080。</a></p>
+<p>需要特别注意的是，在location指令中使用正则表达式后，proxy_pass后面的代理路径不能含有地址链接，也就是不能写成<a href="http://192.168.12.130:8080/，或者类似http://192.168.12.130:8080/jsp的形式。在location指令不使用正则表达式时，没有此限制。" target="_blank" rel="external">http://192.168.12.130:8080/，或者类似http://192.168.12.130:8080/jsp的形式。在location指令不使用正则表达式时，没有此限制。</a></p>
+<h2 id="多个Tomcat负载均衡的实例"><a href="#多个Tomcat负载均衡的实例" class="headerlink" title="多个Tomcat负载均衡的实例"></a>多个Tomcat负载均衡的实例</h2><p>这里假定有3台Tomcat服务器，分别开放不同的端口，地址如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">192.168.12.131:8000  </div><div class="line">192.168.12.132:8080  </div><div class="line">192.168.12.133:8090</div></pre></td></tr></table></figure></p>
+<p>Nginx的相关配置代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">upstream mytomcats &#123;  </div><div class="line">      server 192.168.12.131:8000;  </div><div class="line">      server 192.168.12.132:8080;  </div><div class="line">      server 192.168.12.133:8090;  </div><div class="line">&#125;  </div><div class="line"> </div><div class="line">server &#123;  </div><div class="line">      listen 80;  </div><div class="line">      server_name www.ixdba.net;  </div><div class="line"> </div><div class="line">location ~* \.(jpg|gif|png|swf|flv|wma|wmv|asf|mp3|mmf|zip|rar)$ &#123;  </div><div class="line">       root /web/www/html/;  </div><div class="line">&#125;  </div><div class="line"> </div><div class="line">location / &#123;  </div><div class="line">          proxy_pass http://mytomcats;  </div><div class="line">          proxy_redirect off;  </div><div class="line">          proxy_set_header Host $host;  </div><div class="line">          proxy_set_header X-Real-IP $remote_addr;  </div><div class="line">          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  </div><div class="line">          client_max_body_size 10m;  </div><div class="line">          client_body_buffer_size 128k;  </div><div class="line">          proxy_connect_timeout 90;  </div><div class="line">          proxy_send_timeout 90;  </div><div class="line">          proxy_read_timeout 90;  </div><div class="line">          proxy_buffer_size 4k;  </div><div class="line">          proxy_buffers 4 32k;  </div><div class="line">          proxy_busy_buffers_size 64k;  </div><div class="line">          proxy_temp_file_write_size 64k;  </div><div class="line">&#125;  </div><div class="line"> </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这个实例中，先通过upstream定义一个负载均衡组，组名为mytomcats，组的成员就是上面指定的3台Tomcat服务器；接着通过server指令定义一个www.ixdba.net的虚拟主机；然后通过location指令以正则表达式的方式将指定类型的文件全部交给Nginx去处理；最后将其他所有请求全部交给负载均衡组来处理。</p>
+<p>这里还有一点需要注意，如果在location指令使用正则表达式后再用alias指令，Nginx是不支持的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tomact/" rel="tag"># tomact</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/11/sql/" rel="next" title="mysql SHOW PROCESSLIST">
+                <i class="fa fa-chevron-left"></i> mysql SHOW PROCESSLIST
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/19/spring/" rel="prev" title="springmvc常用注解标签">
+                springmvc常用注解标签 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.jpg"
+               alt="3.mu_blog" />
+          <p class="site-author-name" itemprop="name">3.mu_blog</p>
+          <p class="site-description motion-element" itemprop="description">one step</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/3mu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/3_mu/" target="_blank" title="博客园">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  博客园
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://gold.xitu.io/" title="掘金" target="_blank">掘金</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tech.meituan.com/" title="美团" target="_blank">美团</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://jm.taobao.org/" title="阿里巴巴" target="_blank">阿里巴巴</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建Nginx-Java环境"><span class="nav-number">1.</span> <span class="nav-text">搭建Nginx+Java环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态页面与静态页面分离的实例"><span class="nav-number">1.1.</span> <span class="nav-text">动态页面与静态页面分离的实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个Tomcat负载均衡的实例"><span class="nav-number">1.2.</span> <span class="nav-text">多个Tomcat负载均衡的实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93485, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93485, xid: "2016/12/15/nginx-tomcat/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93485/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

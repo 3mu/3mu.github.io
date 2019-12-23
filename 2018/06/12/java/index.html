@@ -1,0 +1,961 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="java-kylinjava与.Net不一样的差异 方法规则采用:lowerCamelCase,类命名规则:UpperCamelCase 类继承 extend 接口实现:implement 实现接口的方式@Override 特性 虚方法virtual Java 没有对应的关键字:在运行时，会遗忘子类对象中与父类对象中不同的方法。也会覆盖与父类中相同的方法–重写 抽象方法 abstract Java">
+<meta name="keywords" content="java spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java 基础整理">
+<meta property="og:url" content="http://yoursite.com/2018/06/12/java/index.html">
+<meta property="og:site_name" content="3.mu-blog">
+<meta property="og:description" content="java-kylinjava与.Net不一样的差异 方法规则采用:lowerCamelCase,类命名规则:UpperCamelCase 类继承 extend 接口实现:implement 实现接口的方式@Override 特性 虚方法virtual Java 没有对应的关键字:在运行时，会遗忘子类对象中与父类对象中不同的方法。也会覆盖与父类中相同的方法–重写 抽象方法 abstract Java">
+<meta property="og:image" content="http://ohugkp1mj.bkt.clouddn.com/%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86.png">
+<meta property="og:updated_time" content="2019-12-23T03:00:20.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java 基础整理">
+<meta name="twitter:description" content="java-kylinjava与.Net不一样的差异 方法规则采用:lowerCamelCase,类命名规则:UpperCamelCase 类继承 extend 接口实现:implement 实现接口的方式@Override 特性 虚方法virtual Java 没有对应的关键字:在运行时，会遗忘子类对象中与父类对象中不同的方法。也会覆盖与父类中相同的方法–重写 抽象方法 abstract Java">
+<meta name="twitter:image" content="http://ohugkp1mj.bkt.clouddn.com/%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '主编大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/12/java/"/>
+
+
+
+
+
+  <title> java 基础整理 | 3.mu-blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59905235";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">3.mu_blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">one step</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/12/java/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="3.mu_blog">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/me.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="3.mu-blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="3.mu-blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java 基础整理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-12T10:51:54+00:00">
+                2018-06-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2019-12-23T03:00:20+00:00">
+                2019-12-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2018/06/12/java/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2018/06/12/java/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="java-kylin"><a href="#java-kylin" class="headerlink" title="java-kylin"></a>java-kylin</h1><h2 id="java"><a href="#java" class="headerlink" title="java"></a>java</h2><h3 id="与-Net不一样的"><a href="#与-Net不一样的" class="headerlink" title="与.Net不一样的"></a>与.Net不一样的</h3><h4 id="差异"><a href="#差异" class="headerlink" title="差异"></a>差异</h4><ul>
+<li>方法规则采用:lowerCamelCase,类命名规则:UpperCamelCase</li>
+<li>类继承 extend 接口实现:implement</li>
+<li>实现接口的方式@Override 特性</li>
+<li>虚方法virtual Java 没有对应的关键字:<strong>在运行时，会遗忘子类对象中与父类对象中不同的方法。也会覆盖与父类中相同的方法–重写</strong></li>
+<li>抽象方法 abstract</li>
+<li>Java枚举 中可以定义方法/可以继承接口，java中的枚举其实就是一种特殊的类</li>
+<li>接口不要用I开头如 IUser 应该为 UserImpl–&gt;User</li>
+<li>.Net 事件/委托   事件的定义 在.net中会生成一个内部类/接口，JAVA内部类方式模拟多继承</li>
+<li>.NET中的特性Attribute -&gt;JAVA 中的注解 @interface</li>
+<li>JVM-CLR:(JVM可以配置更多参数:初始化内存/最大内存/GC策略等)</li>
+<li>(并发包)System.Collections.Concurrent-&gt;java.util.concurrent</li>
+<li>泛型约束 &lt;? extends Object&gt; / &lt;? supper Object&gt; 对于集合影响</li>
+<li>启动jar 需要手动的加载jar包/class文件 -classpath</li>
+<li>jar包运行需要手动的指定main 入口函数（通常由waven 插件 打包工具完成）<br>MANIFEST.MF 文件 Main-Class</li>
+<li>http抓包? 基于http 抓包需要设置 jvm代理 -DproxySet=true -DproxyHost=127.0.0.1 -DproxyPort=8888</li>
+<li>字符串比较 一定要用 “aa”.equal(“aa”)（除非都是字面量），不然就是比较的引用类型</li>
+<li>string.format(“%s %d”) 与 .net的 string.format(“{0} {1}”)</li>
+<li>….</li>
+</ul>
+<h4 id="Web-服务器"><a href="#Web-服务器" class="headerlink" title="Web 服务器"></a>Web 服务器</h4><ul>
+<li>Jetty/Tomact/Jboss 可以嵌入到应用程序内（Spring Boot 均是采用内嵌方式 友好的支持 微服务/docker）</li>
+</ul>
+<a id="more"></a>
+<h4 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h4><p>key-promoter 插件方便大家记住快捷键</p>
+<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><ul>
+<li>IOC 容器(xml方式声明/注解方式声明)</li>
+<li>AOP(由于类的创建交给了容器 因此很方便实现IOC，<strong>Proxy.newProxyInstance</strong>)</li>
+<li><code>https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html</code></li>
+</ul>
+<h4 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring(IOC)"></a>Spring(IOC)</h4><ul>
+<li>XML方式配置@Bean</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"&gt;</div><div class="line">       <span class="comment">&lt;!-- 配置一个bean --&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"A"</span>  <span class="attr">class</span>=<span class="string">"test.A"</span> &gt;</span></div><div class="line">            <span class="comment">&lt;!--给构造函数传递参数，没有的话则调用默认构造方法  --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"15"</span>/&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"B"</span> <span class="attr">class</span>=<span class="string">"test.B"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"C"</span> <span class="attr">class</span>=<span class="string">"test.C"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"22"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!-- 基本数据类型参数用value=字符串（Spring根据构造参数类型自动解析字符串），</span></div><div class="line">                             引用类型的参数用ref= bean id --&gt;</div><div class="line">            <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"c"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">       <span class="comment">&lt;!-- factory-method通过工厂方法将单例类配置为bean --&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"f"</span> <span class="attr">class</span>=<span class="string">"test.F"</span> <span class="attr">factory-method</span>=<span class="string">"getImpl"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>注解方式配置@Bean</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@ComponentScan</span> 扫描器</div><div class="line"><span class="meta">@Configuration</span> 表明该类是配置类</div><div class="line"><span class="meta">@Component</span>   指定把一个对象加入IOC容器---&gt;<span class="meta">@Name</span>也可以实现相同的效果【一般少用】</div><div class="line"><span class="meta">@Repository</span>   作用同<span class="meta">@Component</span>； 在持久层使用</div><div class="line"><span class="meta">@Service</span>      作用同<span class="meta">@Component</span>； 在业务逻辑层使用</div><div class="line"><span class="meta">@Controller</span>    作用同<span class="meta">@Component</span>； 在控制层使用</div><div class="line"><span class="meta">@Resource</span>  依赖关系</div><div class="line">如果<span class="meta">@Resource</span>不指定值，那么就根据类型来找，相同的类型在IOC容器中不能有两个</div><div class="line">如果<span class="meta">@Resource</span>指定了值，那么就根据名字来找</div><div class="line"></div><div class="line"><span class="meta">@Autowired</span> 注入</div><div class="line">--------------------------------</div><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> JwtTokenUtil jwtTokenUtil;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">public</span> UserRepository userRepository;</div><div class="line"></div><div class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/login"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(@RequestBody User user)</span> </span>&#123;</div><div class="line"></div><div class="line">        User db_user = userRepository.login(user.getUsername(), user.getPassword());</div><div class="line">        <span class="keyword">return</span> jwtTokenUtil.generateToken(db_user);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@Repository</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserRepositoryImpl</span> <span class="keyword">implements</span> <span class="title">UserRepository</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">login</span><span class="params">(String username, String password)</span> </span>&#123;</div><div class="line">        User user = <span class="keyword">new</span> User();</div><div class="line">        user.setUsername(username);</div><div class="line">        user.setPassword(password);</div><div class="line">        <span class="keyword">return</span> user;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JwtTokenUtil</span></span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 密钥</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String secret = <span class="string">"aaaaaaaa"</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 从数据声明生成令牌</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> claims 数据声明</div><div class="line">     * <span class="doctag">@return</span> 令牌</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">generateToken</span><span class="params">(Map&lt;String, Object&gt; claims)</span> </span>&#123;</div><div class="line">        Date expirationDate = <span class="keyword">new</span> Date(System.currentTimeMillis() + <span class="number">2592000L</span> * <span class="number">1000</span>);</div><div class="line">        <span class="keyword">return</span> Jwts.builder().setClaims(claims).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();</div><div class="line">    &#125;</div><div class="line"> ....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Spirng-AOP"><a href="#Spirng-AOP" class="headerlink" title="Spirng AOP"></a>Spirng AOP</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.controller;  </div><div class="line">  </div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</div><div class="line"><span class="meta">@RestController</span>  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstController</span> </span>&#123;  </div><div class="line">  </div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/aop"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">first</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> <span class="string">"aop done"</span>;  </div><div class="line">    &#125; </div><div class="line">&#125;</div><div class="line"><span class="keyword">package</span> com.example.aop;  </div><div class="line">  </div><div class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;  </div><div class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;  </div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;  </div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;  </div><div class="line">  </div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;  </div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"><span class="meta">@Aspect</span>  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogAspect</span> </span>&#123;</div><div class="line">  <span class="comment">//@Pointcut("execution(访问修饰符 返回值匹配 类路径匹配.方法名匹配.*(..))")    </span></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(public * com.example.controller.*.*(..))"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">webLog</span><span class="params">()</span></span>&#123;&#125;  </div><div class="line">  </div><div class="line">    <span class="meta">@Before</span>(<span class="string">"webLog()"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deBefore</span><span class="params">(JoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="meta">@AfterReturning</span>(returning = <span class="string">"ret"</span>, pointcut = <span class="string">"webLog()"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfterReturning</span><span class="params">(Object ret)</span> <span class="keyword">throws</span> Throwable </span>&#123;    </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">//后置异常通知  </span></div><div class="line">    <span class="meta">@AfterThrowing</span>(<span class="string">"webLog()"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">throwss</span><span class="params">(JoinPoint jp)</span></span>&#123;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">//后置最终通知,final增强，不管是抛出异常或者正常退出都会执行  </span></div><div class="line">    <span class="meta">@After</span>(<span class="string">"webLog()"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">(JoinPoint jp)</span></span>&#123;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">//环绕通知,环绕增强，相当于MethodInterceptor  </span></div><div class="line">    <span class="meta">@Around</span>(<span class="string">"webLog()"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">arround</span><span class="params">(ProceedingJoinPoint pjp)</span> </span>&#123;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            Object o =  pjp.proceed();  </div><div class="line">            <span class="keyword">return</span> o;  </div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Waven"><a href="#Waven" class="headerlink" title="Waven"></a>Waven</h3><h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mvn archetype:generate 创建Maven项目</div><div class="line">mvn compile</div><div class="line">mvn deploy(需要在.m2/setting.xml文件中配置对应的账号与密码)</div><div class="line">mvn clean</div><div class="line">mvn package</div><div class="line">mvn install</div><div class="line">mvn clean package -Dmaven.test.skip=true:</div></pre></td></tr></table></figure>
+<h4 id="Spring-Boot-Pom"><a href="#Spring-Boot-Pom" class="headerlink" title="Spring Boot Pom"></a>Spring Boot Pom</h4><ul>
+<li>Spring Boot 项目引用</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></div><div class="line">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>beefun.analysis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>beefun.analysis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--继承--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--模块--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">modules</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>api<span class="tag">&lt;/<span class="name">module</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>scheduled<span class="tag">&lt;/<span class="name">module</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>web<span class="tag">&lt;/<span class="name">module</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">module</span>&gt;</span>etl<span class="tag">&lt;/<span class="name">module</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">modules</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--参数 配置文件中通过 $&#123;java.version&#125; 访问--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--热部署--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>beefun.influx<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>beefun.influx<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>spring-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://repo.spring.io/libs-release<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!--私有仓库--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://172.16.0.241:8081/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">releases</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--插件仓库--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>spring-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://repo.spring.io/libs-release<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>可执行的jar pom</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></div><div class="line">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>beefun.analysis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>beefun.analysis.etl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.otter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>canal.client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hbase<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hbase-it<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--编译插件--&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.6<span class="tag">&lt;/<span class="name">source</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.6<span class="tag">&lt;/<span class="name">target</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--打包插件--&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-shade-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">executions</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">execution</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">goals</span>&gt;</span></div><div class="line">                            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>shade<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">                            <span class="comment">&lt;!--写入口函数--&gt;</span></div><div class="line">                            <span class="tag">&lt;<span class="name">transformers</span>&gt;</span></div><div class="line">                                <span class="tag">&lt;<span class="name">transformer</span></span></div><div class="line">                                        <span class="attr">implementation</span>=<span class="string">"org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"</span>&gt;</div><div class="line">                                    <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>beefun.analysis.etl.EtlApplication<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></div><div class="line">                                <span class="tag">&lt;/<span class="name">transformer</span>&gt;</span></div><div class="line">                            <span class="tag">&lt;/<span class="name">transformers</span>&gt;</span></div><div class="line">                        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>Maven配置</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">    <span class="comment">&lt;!-- 仓库账号密码设置/方便发布的私有仓库 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">server</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>maven-releases<span class="tag">&lt;/<span class="name">id</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin123<span class="tag">&lt;/<span class="name">password</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></div><div class="line">     <span class="comment">&lt;!-- 镜像代理设置，解决大中华局域网的问题 --&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus-aliyun<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Nexus aliyun<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><h4 id="注解-Condition"><a href="#注解-Condition" class="headerlink" title="注解/ @Condition*"></a>注解/ @Condition<em>*</em></h4><p><code>http://3mu.github.io/2016/12/19/spring/</code></p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"grafana"</span>)</div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GrafanaConfig</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String api;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getApi</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> api;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApi</span><span class="params">(String api)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.api = api;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String token;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getToken</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> token;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setToken</span><span class="params">(String token)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.token = token;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;String&gt; webhooks;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getWebhooks</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> webhooks;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWebhooks</span><span class="params">(List&lt;String&gt; webhooks)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.webhooks = webhooks;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> List&lt;String&gt; ignore;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getIgnore</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> ignore;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIgnore</span><span class="params">(List&lt;String&gt; ignore)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.ignore = ignore;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="attr">grafana:</span></div><div class="line"><span class="attr">  api:</span> <span class="attr">http://monitor.wsgjp.com</span></div><div class="line"><span class="attr">  token:</span> <span class="string">Bearer</span> <span class="string">eyJrIjoiMWtpSjhJSXFRZzl0TmV6cDBOQjQyRTZRcE42MVNUZmkiLCJuIjoib2tvayIsImlkIjoxfQ==</span></div><div class="line"><span class="attr">  webhooks:</span> </div><div class="line"><span class="attr">  - https:</span><span class="string">//oapi.dingtalk.com/robot/send?access_token=d3b4bb10db553f92c1f424502cb8cb62c0be8b02bca1add9c4c880d1919eab99</span></div><div class="line"><span class="attr">  - https:</span><span class="string">//oapi.dingtalk.com/robot/send?access_token=1231231313123</span></div><div class="line"><span class="attr">  ignore:</span> </div><div class="line"><span class="bullet">  -</span> <span class="string">bfuned2</span></div></pre></td></tr></table></figure>
+<h4 id="Spring-Boot-MVC"><a href="#Spring-Boot-MVC" class="headerlink" title="Spring Boot MVC"></a>Spring Boot MVC</h4><ul>
+<li>thymeleaf 模板解析</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="attr">spring:</span></div><div class="line"><span class="attr">  thymeleaf:</span></div><div class="line"><span class="attr">    prefix:</span> <span class="attr">classpath:/templates/</span></div><div class="line"><span class="attr">    suffix:</span> <span class="string">.html</span></div><div class="line"><span class="attr">    mode:</span> <span class="string">HTML5</span></div><div class="line"><span class="attr">    encoding:</span> <span class="string">utf-8</span></div><div class="line"><span class="attr">    servlet:</span></div><div class="line"><span class="attr">      content-type:</span> <span class="string">text/html</span></div><div class="line"><span class="attr">    cache:</span> <span class="literal">false</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</div><div class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/index"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">test</span><span class="params">(ModelAndView mv)</span> </span>&#123;</div><div class="line">        mv.setViewName(<span class="string">"/index"</span>);</div><div class="line">        String username = SecurityContextHolder.getContext().getAuthentication().getName();</div><div class="line">        mv.addObject(<span class="string">"title"</span>, <span class="string">"this is a word "</span> + username);</div><div class="line">        <span class="keyword">return</span> mv;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">"'Hello, ' + $&#123;title&#125;"</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="Spring-Boot-Rest-Service"><a href="#Spring-Boot-Rest-Service" class="headerlink" title="Spring Boot Rest Service"></a>Spring Boot Rest Service</h4><ul>
+<li>Rest</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">public</span> OrderService orderService;</div><div class="line"></div><div class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/count"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> orderService.getCount();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Spring-Boot-Schedule"><a href="#Spring-Boot-Schedule" class="headerlink" title="Spring Boot Schedule"></a>Spring Boot Schedule</h4><ul>
+<li>基于corn的自定义任务</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KylinTask</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Scheduled</span>(cron = <span class="string">"0/2 * * * * ?"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"is run"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Mybatis-与-Spring-Boot-集成"><a href="#Mybatis-与-Spring-Boot-集成" class="headerlink" title="Mybatis 与 Spring Boot 集成"></a>Mybatis 与 Spring Boot 集成</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Mapper</span></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OrderService</span> </span>&#123;</div><div class="line">    <span class="meta">@Select</span>(<span class="string">"select count(1) from TESTSALE"</span>)</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="实例演示"><a href="#实例演示" class="headerlink" title="实例演示"></a>实例演示</h3><p><code>http://gitlab.wsgjp.com.cn:10080/wsgjp/analysis.git</code></p>
+<h4 id="Kylin"><a href="#Kylin" class="headerlink" title="Kylin"></a>Kylin</h4><p><img src="http://ohugkp1mj.bkt.clouddn.com/%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86.png" alt="123"></p>
+<ul>
+<li>EFP 连接数据分析服务获取报表数据</li>
+<li>数据分析服务通过Sql 语句查询kylin 系统数据</li>
+<li>计划任务 每天晚上调用Kylin Rest Api 增量的进行预计算 方便查询</li>
+<li>数据收集 通过Canal 经过数据清洗导入到Hbase</li>
+</ul>
+<h4 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h4><ul>
+<li>beefun.analysis.api</li>
+</ul>
+<p>对erp提供api服务</p>
+<ul>
+<li>beefun.analysis.etl</li>
+</ul>
+<p>数据收集 通过canal 采集binlog 同步到 hbase</p>
+<ul>
+<li>beefun.analysis.scheduled</li>
+</ul>
+<p>计划任务 定期执行kylin 构建任务</p>
+<h4 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h4><p><code>https://spring.io/guides</code></p>
+<p><code>http://www.mybatis.org/mybatis-3/zh/index.html</code></p>
+<p><code>https://github.com/dyc87112/SpringBoot-Learning</code></p>
+<p><code>《thinking in java》</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java-spring/" rel="tag"># java spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/09/influxdb-grafana/" rel="next" title="influxdb_grafana">
+                <i class="fa fa-chevron-left"></i> influxdb_grafana
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/17/consul/" rel="prev" title="consul集群搭建">
+                consul集群搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.jpg"
+               alt="3.mu_blog" />
+          <p class="site-author-name" itemprop="name">3.mu_blog</p>
+          <p class="site-description motion-element" itemprop="description">one step</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/3mu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/3_mu/" target="_blank" title="博客园">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  博客园
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://gold.xitu.io/" title="掘金" target="_blank">掘金</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tech.meituan.com/" title="美团" target="_blank">美团</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://jm.taobao.org/" title="阿里巴巴" target="_blank">阿里巴巴</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java-kylin"><span class="nav-number">1.</span> <span class="nav-text">java-kylin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java"><span class="nav-number">1.1.</span> <span class="nav-text">java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与-Net不一样的"><span class="nav-number">1.1.1.</span> <span class="nav-text">与.Net不一样的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#差异"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">差异</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Web-服务器"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">Web 服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Idea"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">Idea</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring"><span class="nav-number">1.1.2.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-IOC"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Spring(IOC)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spirng-AOP"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Spirng AOP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Waven"><span class="nav-number">1.1.3.</span> <span class="nav-text">Waven</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Pom"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">Spring Boot Pom</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot"><span class="nav-number">1.1.4.</span> <span class="nav-text">Spring Boot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注解-Condition"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">注解/ @Condition*</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-MVC"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">Spring Boot MVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Rest-Service"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">Spring Boot Rest Service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Schedule"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">Spring Boot Schedule</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mybatis-与-Spring-Boot-集成"><span class="nav-number">1.1.4.6.</span> <span class="nav-text">Mybatis 与 Spring Boot 集成</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例演示"><span class="nav-number">1.1.5.</span> <span class="nav-text">实例演示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kylin"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">Kylin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目结构"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资料"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">资料</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93485, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93485, xid: "2018/06/12/java/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93485/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

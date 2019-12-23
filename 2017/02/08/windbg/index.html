@@ -1,0 +1,875 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Windbg," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="抓包命令1procdump64.exe -ma /accepteula   -n 1 6140 d:\ 命令(加载调试器)123456789命令：.loadby sos mscorwks  .Net 3.5版本及以下.loadby sos clr .Net 4.0.loadc:\windows\microsoft.net\framework\v2.0.50727\sos.dll说明：如果服务器的.">
+<meta name="keywords" content="Windbg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windbg">
+<meta property="og:url" content="http://yoursite.com/2017/02/08/windbg/index.html">
+<meta property="og:site_name" content="3.mu-blog">
+<meta property="og:description" content="抓包命令1procdump64.exe -ma /accepteula   -n 1 6140 d:\ 命令(加载调试器)123456789命令：.loadby sos mscorwks  .Net 3.5版本及以下.loadby sos clr .Net 4.0.loadc:\windows\microsoft.net\framework\v2.0.50727\sos.dll说明：如果服务器的.">
+<meta property="og:updated_time" content="2019-12-23T03:00:20.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windbg">
+<meta name="twitter:description" content="抓包命令1procdump64.exe -ma /accepteula   -n 1 6140 d:\ 命令(加载调试器)123456789命令：.loadby sos mscorwks  .Net 3.5版本及以下.loadby sos clr .Net 4.0.loadc:\windows\microsoft.net\framework\v2.0.50727\sos.dll说明：如果服务器的.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '主编大人'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/08/windbg/"/>
+
+
+
+
+
+  <title> Windbg | 3.mu-blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59905235";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">3.mu_blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">one step</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/08/windbg/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="3.mu_blog">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/me.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="3.mu-blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="3.mu-blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Windbg
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-08T13:04:19+00:00">
+                2017-02-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              <span class="post-meta-item-text">更新于</span>
+              <time title="更新于" itemprop="dateModified" datetime="2019-12-23T03:00:20+00:00">
+                2019-12-23
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/02/08/windbg/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/02/08/windbg/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="抓包命令"><a href="#抓包命令" class="headerlink" title="抓包命令"></a>抓包命令</h2><figure class="highlight bat"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">procdump64.exe -ma /accepteula   -n <span class="number">1</span> <span class="number">6140</span> d:\</div></pre></td></tr></table></figure>
+<h2 id="命令-加载调试器"><a href="#命令-加载调试器" class="headerlink" title="命令(加载调试器)"></a>命令(加载调试器)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">命令：</div><div class="line">.loadby sos mscorwks  .Net 3.5版本及以下</div><div class="line">.loadby sos clr .Net 4.0</div><div class="line">.loadc:\windows\microsoft.net\framework\v2.0.50727\sos.dll</div><div class="line">说明：</div><div class="line">如果服务器的.Net版本与本机不匹配需要服务器版本的mscordacwks.dll文件，如下：.sympath=</div><div class="line">``` </div><div class="line">&lt;!--more--&gt;</div><div class="line">##  基本操作指令</div></pre></td></tr></table></figure>
+<p>!help    sos指令帮助<br>!threads  显示所有线程<br>!threadpool(!tp)   显示程序池信息<br>~54s   查看54号线程<br>kb   显示当前线程的callstack<br>~*e!clrstack  看所有线程的堆栈信息<br>!dumpheap  显示托管堆的信息<br>!clrstack  显示调用栈<br>!dumpstackobjects 打印当前thread的stack中保存的所有托管的object<br>!dumpclass  打印出指定类型信息址上的类型定义<br>!eeheap   列举出当前进程中managedheap的统计信息<br>!dumpobj(!do)  显示一个对象的内容<br>!dumparray 显示数组<br>!syncblk   显示同步块<br>!runaway  显示线程cpu时间<br>!gcroot    跟踪对象内存引用<br>!gchandles   打印出当前所有的GCHandle统计信息<br>!objsize    打印出指定object<br>!pe    打印异常<br>vertarget  查看系统运行时间<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line">## 内存泄露常用指令</div></pre></td></tr></table></figure></p>
+<p> !dumpheap–stat  检查当前所有托管类型的统计信息<br>!dumpheap –mt 查看函数表地址中的各个对象信息<br>!do   查看某个对象的具体信息<br>!da   查看数组信息<br>!gcroot  查看哪个root了某个对象</p>
+<p>使用例子：<br>!dumpheap –mt 79124418  79124418是指某个函数表的地址。<br>!do 0aca1000  查看0aca1000地址中的对象<br>!gcroot 0aca1000  查看谁root 了0aca1000对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">## 线程Hang住常用指令</div></pre></td></tr></table></figure></p>
+<p> !threads   查看托管经程的统计信息<br> !tp(threadpool)   查看一共设有多少个线程在运行<br> !runawayf    查看各个线程的CPU使用情况<br>~*e!clrstack 查看各个线程都在做什么<br>!synblk 查看AwareLock的Lock方法</p>
+<p> 不常用指令：<br> !ip2md 找到对应的module信息，后面参数为Callback中的EIP地址<br> lmvm    查看DLL/EXE文件信息，参数为某个dll文件名称<br> !savemodule   保存DLL到本场</p>
+<p> 使用例子：<br> !ip2md 0x09d30bao<br> lmvmcommonobjects<br> !savemodule 081f0000 d:\xiongli\commandobject.dll<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">## 内存指令：</div></pre></td></tr></table></figure></p>
+<p> S    可以搜索内存<br> r   显示寄存器的信息<br> d    显示内存地址上的值<br> e    命令修改内存地址上的值<br> !address   命令显示某一地址上的页信息<br> 使用例子：<br> 1）使用d命令显示esp寄存器指向的内存，默认为byte<br>   d  esp<br> 2）用dd命令直接指定054efc14地址，第二个d表示用DWORD格式<br> dd 054efc14<br> 3）用ed命令把054efc14地址上的值修改成11112222<br> ed 054efc14  11112222<br> 4）再次用dd命令显示054efc14地址上的值，后面的L4参数表示长度为4个DWORD<br> dd 054efc14  L4<br> 5）在内存中搜索sina.com<br> s –u  0012ff40 L?8000000 “sina.com”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">## 其他常用指令：</div></pre></td></tr></table></figure></p>
+<p> lmf   列出当前进程中加载的所有DLL文件和对应的路径<br> ~    显示线程信息和不同线程之间切换的值<br> k    显示当前线程的callstack<br> ~*k   结合~和k命令，来显示所有线程的callstack<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line"> </div><div class="line">## 生成DUMP包脚本</div><div class="line">``` </div><div class="line"></div><div class="line"> </div><div class="line">Set objShell =CreateObject(&quot;Wscript.Shell&quot;)</div><div class="line">Dim InputPid</div><div class="line">InputPid = InputBox(&quot;请输入Pid&quot;)</div><div class="line">objCommand1 = &quot;&quot;&quot;D:\ProgramFiles\Debugging Tools for Windows (x86)\adplus.vbs&quot;&quot;&quot; &amp;&quot; -hang -o d:\dump -quiet -p &quot; &amp; InputPid</div><div class="line">objShell.Run(objCommand1)</div><div class="line"> </div><div class="line">保存成.vbs的文件</div><div class="line">点开运行后，输入对应的进程PID，即可抓下当前进程的包。</div></pre></td></tr></table></figure></p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">.loadby sos mscorwks	.Net 3.5版本及以下</div><div class="line">.loadby sos clr	.Net 4.0</div><div class="line">.load c:\windows\microsoft.net\framework\v2.0.50727\sos.dll	加载SOS文件</div><div class="line">.sympath=	如果服务器的.Net版本与本机不匹配需要服务器版本的mscordacwks.dll文件</div><div class="line">!help	sos指令帮助</div><div class="line">vertarget	查看系统运行时间</div><div class="line">!threads	显示所有线程</div><div class="line">!threadpool(!tp)	显示程序池信息</div><div class="line">~54s  	查看54号线程</div><div class="line">kb 	显示当前线程的callstack</div><div class="line">~*e !clrstack  	看所有线程的堆栈信息</div><div class="line">!syncblk	显示同步块</div><div class="line">!runaway	显示线程cpu时间</div><div class="line">!pe	打印异常</div><div class="line">!dumpheap	显示托管堆的信息</div><div class="line">!dumpheap –stat	检查当前所有托管类型的统计信息</div><div class="line">!dumpheap –mt 	查看函数表地址中的各个对象信息	!dumpheap –mt 79124418   79124418是指某个函数表的地址。</div><div class="line">!clrstack	显示调用栈</div><div class="line">!dumpstackobjects	打印当前thread的stack中保存的所有托管的object</div><div class="line">!dumpclass	打印出指定类型信息址上的类型定义</div><div class="line">!eeheap	列举出当前进程中managed heap的统计信息</div><div class="line">!dumpobj(!do)	显示一个对象的内容	!do 0aca1000 查看0aca1000地址中的对象</div><div class="line">!dumparray(!da)	显示数组</div><div class="line">!gcroot	跟踪对象内存引用	!gcroot 0aca1000   查看谁root 了0aca1000对象</div><div class="line">!gchandles	打印出当前所有的GC Handle统计信息</div><div class="line">!objsize	打印出指定object</div><div class="line">!ip2md	找到对应的module信息，后面参数为Callback中的EIP地址	!ip2md 0x09d30bao</div><div class="line">lmvm	查看DLL/EXE文件信息，参数为某个dll文件名称	lmvm commonobjects</div><div class="line">!savemodule	保存DLL到本场	!savemodule 081f0000 d:\xiongli\commandobject.dll</div><div class="line">S	可以搜索内存	在内存中搜索sina.com: s  –u  0012ff40 L?8000000 “sina.com”</div><div class="line">r	显示寄存器的信息</div><div class="line">d	显示内存地址上的值	使用d命令显示esp寄存器指向的内存，默认为byte: d  esp</div><div class="line">用dd命令直接指定054efc14地址，第二个d表示用DWORD格式: dd  054efc14</div><div class="line">e	命令修改内存地址上的值	用ed命令把054efc14地址上的值修改成11112222: ed  054efc14  11112222</div><div class="line">!address	命令显示某一地址上的页信息</div><div class="line">lmf	列出当前进程中加载的所有DLL文件和对应的路径</div><div class="line">~	显示线程信息和不同线程之间切换的值</div><div class="line">k	显示当前线程的call stack</div><div class="line">~*k	结合~和k命令，来显示所有线程的callstack</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Windbg/" rel="tag"># Windbg</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/07/index/" rel="next" title="npm镜像">
+                <i class="fa fa-chevron-left"></i> npm镜像
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/10/webmagicinit/" rel="prev" title="webmagic 搭建">
+                webmagic 搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/me.jpg"
+               alt="3.mu_blog" />
+          <p class="site-author-name" itemprop="name">3.mu_blog</p>
+          <p class="site-description motion-element" itemprop="description">one step</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/3mu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/3_mu/" target="_blank" title="博客园">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  博客园
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://gold.xitu.io/" title="掘金" target="_blank">掘金</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tech.meituan.com/" title="美团" target="_blank">美团</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://jm.taobao.org/" title="阿里巴巴" target="_blank">阿里巴巴</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#抓包命令"><span class="nav-number">1.</span> <span class="nav-text">抓包命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令-加载调试器"><span class="nav-number">2.</span> <span class="nav-text">命令(加载调试器)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">3.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93485, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93485, xid: "2017/02/08/windbg/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93485/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
